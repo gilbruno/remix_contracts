@@ -6,5 +6,8 @@ import {SimpleStorage} from './SimpleStorage.sol';
 
 contract AddTwelveStorage is SimpleStorage {
 
+    function store(uint256 _favoriteNumber) public override {
+        myFavoriteNumber = _favoriteNumber + 12;
+    }
 }
 
