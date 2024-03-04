@@ -32,12 +32,12 @@ contract FundMe {
         require(msg.sender == owner, 'You are not the owner !');
         _;
     }
-    
+
     function withdrawal() public onlyOwner {
         //Empty the mapping 'fundedAmountBy' 
-        for (uint256 i = 0; i < fundedAmountBy.length; i++) {
+        for (uint256 i = 0; i < funders.length; i++) {
             address funder = funders[i];
-            fundedAmountBy[i] = 0;
+            fundedAmountBy[funder] = 0;
         }
         funders = new address[](0);
 
