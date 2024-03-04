@@ -37,7 +37,7 @@ contract FundMe {
         funders = new address[](0);
 
         //Transfer : Revert in case of failure
-        payable(msg.sender).transfer(address(this).balance);
+        //payable(msg.sender).transfer(address(this).balance);
 
         //Send : Do not Revert in case of failure (so we must implement revert ourself)
         //bool successSend = payable(msg.sender).send(address(this).balance);
