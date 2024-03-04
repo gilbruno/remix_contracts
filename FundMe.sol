@@ -20,6 +20,7 @@ contract FundMe {
     function fund() public payable {
         require(msg.value.getConversionRate() > minimumUsd, "The minimum ammount to send is 5 USD");
         fundedAmountBy[msg.sender] = fundedAmountBy[msg.sender] + msg.value;
+        funders.push[msg.sender];
     }
 
 
