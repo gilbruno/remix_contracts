@@ -8,8 +8,8 @@ contract FundMe {
 
     address public owner;
     //We must multiply by 10^18 because we manipulate 18decimals
-    uint256 minimumUsd = 5e18;
-    address[] funders;
+    uint256 public minimumUsd = 5e18;
+    address[] public funders;
 
     mapping (address funders => uint256 amounFunded) public fundedAmountBy;
 
