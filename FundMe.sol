@@ -6,19 +6,19 @@ import {PriceConverter} from './PriceConverter.sol';
 contract FundMe {
     using PriceConverter for uint256;
 
-    address public owner;
+    address public immutable i_owner;
     //We must multiply by 10^18 because we manipulate 18decimals
-    uint256 public minimumUsd = 5e18;
+    uint256 public constant MINIMUM_USD = 5e18;
     address[] public funders;
 
     mapping (address funders => uint256 amounFunded) public fundedAmountBy;
 
     constructor() {
-        owner = msg.sender;    
+        i_owner = msg.sender;    
     }
 
     function fund() public payable {
-        require(msg.value.getConversionRate() > minimumUsd, "The minimum ammount to send is 5 USD");
+        require(msg.value.getConversionRate() > MINIMUM_USD, "The minimum ammount to send is 5 USD");
         fundedAmountBy[msg.sender] = fundedAmountBy[msg.sender] + msg.value;
         funders.push(msg.sender);
     }
@@ -30,7 +30,7 @@ contract FundMe {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, 'You are not the owner !');
+        require(msg.sender == i_owner, 'You are not the owner !');
         _;
     }
 
@@ -46,6 +46,14 @@ contract FundMe {
         (bool successCall, ) = payable(msg.sender).call{value: address(this).balance}("");    
         require(successCall, "Call to send ETH failed");
 
+    }
+
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
     }
 
 }
